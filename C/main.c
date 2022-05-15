@@ -30,13 +30,13 @@ void  RDA_isr(void) // reception et decoupe des donnees
 
 void test_diodes(int val_max, int val_min, int true_val, int ech_aff){
    if((true_val > val_max) || (true_val < val_min)){
-      
-      printf("ALARM_IN %d",true_val);
-      output_toggle(PIN_E1);
+      // si valeur mesurée en dehors des limites
+      printf("ALARM_OUT %d",true_val); // On envoie vers la connexion serial "ALARM_OUT distance"
+      output_toggle(PIN_E1); // fait clignoter la led rouge
    }
    else{
-      printf("ALARM_OUT %d",true_val);
-      output_high(PIN_E0);
+      printf("ALARM_IN %d",true_val); // On envoie vers la connexion serial "ALARM_IN distance"
+      output_high(PIN_E0); // allume la led verte
    }
 }
 
@@ -76,9 +76,7 @@ int afficheurs(int true_val, int ech_aff){
    
    delay_ms(150); //enlever IRL ?
    output_b(true_val | val_affich | val_point);
-   //output_b(0b00011000);
-   // OU logique des differents nombres binaires. Pas sur que ca fonctionne, val_affich et val_point -> int
-   // alors que val -> tableau de int
+   // OU logique des differents nombres binaires.
    return ech_aff;
 }
 
@@ -101,26 +99,30 @@ void main()
    {
 	  
       if(flag_suivant){ // tranforme les donnee en int et reconstruit le nombre 
-	 int16 num1 = data[1] - 48;
+	      // code ASCII -> Les valeurs dans data sont des char. en soustrayant 48 on obtiens leur équivalent en int
+	      // int16 -> de base int se fait sur 8 bits. On peut y mettre comme valeur max 255.
+	 int16 num1 = data[1] - 48; 
          int16 num2 = data[2] - 48;
          int16 num3 = data[3] - 48;
-         val_max = (int16)((num1*100)+(num2*10)+num3);
+         val_max = (int16)((num1*100)+(num2*10)+num3); // remise sous la bonne forme
          flag_suivant = 0;
       }
       
+      // On envoie un signal vers le sensor pendant 300 microsecondes
       output_high(PIN_C0);
-      delay_us(300); 
+      delay_us(20); // On laisse le signal en haut pendant 20 microsecondes. Le HCSR04 peut recevoir un signal trigger minimum 10 microsecondes
       output_low(PIN_C0);
       
+	// Tant qu'il ne reçoit pas de réponse du sensor il bloque le code. Une fois qu'il reçois une réponse il remets le timer à 0.
       while(!input(PIN_C1)){}
       set_timer0(0);
 
-      
+ 	// Tant qu'il reçoit une réponse du sensor il bloque. Une fois que cette réponse est finie il récupère le temps du timer et ...   
       while(input(PIN_C1)){}
       duration = (long)get_timer0(); 
       val_mesuree = (int16)(duration / 145); // calcule de la distance
       
-      if (val_mesuree >= 1000){ 
+      if (val_mesuree >= 1000){ // Si on dépasse les 1000 on mets 0 aux deux afficheurs et un point au premier. (distance max mesurable : environs 400 cm)
          output_b(0);
          output_high(PIN_B5); 
 
