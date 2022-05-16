@@ -1,55 +1,64 @@
 
-ROM used:   708/16384 (4%)
-            708/16384 (4%) including unused fragments
+ROM used:   1262/16384 (8%)
+            1262/16384 (8%) including unused fragments
 
-            0.7 Average locations per line
-            13.9 Average locations per statement
+            0.8 Average locations per line
+            6.4 Average locations per statement
 
-RAM used:   33/768 (4%) at main() level
-            40/768 (5%) worst case
+RAM used:   53/768 (7%) at main() level
+            69/768 (9%) worst case
 
 Stack used: 1 worst case (0 in main + 1 for interrupts)
 Stack size: 31
 
 Lines Stmts  %   Files
 ----- ----- ---  -----
-  118    51 100  main.c
+  141    67  34  main.c
     8     0   0  main.h
   819     0   0  ..\..\..\..\Program Files (x86)\PICCDEMO\Devices\18F448.h
+   37     0   0  ..\..\..\..\Program Files (x86)\PICCDEMO\Drivers\stdio.h
+  435   129  66  ..\..\..\..\Program Files (x86)\PICCDEMO\Drivers\string.h
+   32     0   0  ..\..\..\..\Program Files (x86)\PICCDEMO\Drivers\stddef.h
+   28     0   0  ..\..\..\..\Program Files (x86)\PICCDEMO\Drivers\ctype.h
 ----- -----
-  945    51 Total
+ 1500   196 Total
 
 Page ROM  %  RAM    Vol Diff  Functions:
 ---- --- --- ---    --- ----  ----------
-0     40   3    1             @delay_ms1
-0     28   2    1             @delay_us1
+0     40   2    1             @delay_ms1
+0    118   5    5    231  6.6  strcmp
+0     24   1    0      5  1.0  @GETCH_BIU_1
 0      6   0    0      5  1.0  RTCC_isr
-0      6   0    0      5  1.0  RDA_isr
-0     26   2    4    160  4.8  test_diodes
-0    136  10    5    603  6.6  afficheurs
-0     40   3    3    762  5.8  @DIV88
-0    176  12    8    762  5.8  MAIN
-0     68   5    5             @DIV1616
- Inline         0    762  5.8  @cinit1
+0     94   4    4    209  4.5  RDA_isr
+0     84   3    3    179  3.3  test_diodes
+0      8   0    0    762  5.8  @const831
+0     32   1    3             @PSTRINGCN_9600_31766_31767
+0     40   2    3             @DIV88
+0    178   7    6             @PRINTF_D_9600_31766_31767
+0      8   0    0             @const840
+0    136   5    5    603  6.6  afficheurs
+0    244  10   11   1092  8.0  MAIN
+0     68   3    5             @DIV1616
+ Inline         0             @cinit1
 
 Program metrics:
-    Functions               7
-    Statements              51
-    Comments                166
-    Volume (V)              4267
-    Difficulty (D)          30.5
-    Effort to implement (E) 130264
-    Time to implement (T)   2 hours, 1 minutes
+    Functions               8
+    Statements              196
+    Comments                358
+    Volume (V)              4403
+    Difficulty (D)          36.7
+    Effort to implement (E) 161527
+    Time to implement (T)   2 hours, 30 minutes
     Est Delivered Bugs (B)  1
-    Cyclomatic Complexity   7
-    Maintainability (MI)    153
+    Cyclomatic Complexity   12
+    Maintainability (MI)    46
 
  Segment     Used  Free
 -----------  ----  ----
 00000-00002     4  0  
 00004-00006     0  4  
 00008-000B8   178  0  
-000BA-03FFE   526  15672  
+000BA-03FFE  1080  15118  
 
 
 

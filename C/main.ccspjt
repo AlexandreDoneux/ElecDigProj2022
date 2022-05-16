@@ -14,11 +14,11 @@ Type=4
 1=main.c
 
 [ProjectLog]
-Days=1
+Days=2
 D1=15-05-2022
 D1_L=10
 D1_L1=[75295]Stopped Editing.
-TotalEdit=10
+TotalEdit=11
 TotalDebug=0
 D1_E=10
 D1_D=0
@@ -31,6 +31,23 @@ D1_L7=[76216]Stopped Editing.
 D1_L8=[76216]Project Closed.
 D1_L9=[76276]Project Opened.
 D1_L10=[76309]Started Editing.
+D2=17-05-2022
+D2_L=13
+D2_L1=[7491]Project Opened.
+D2_L2=[7499]Started Editing.
+D2_L3=[7799]Stopped Editing.
+D2_E=1
+D2_D=0
+D2_L4=[12710]Project Closed.
+D2_L5=[14869]Project Opened.
+D2_L6=[14888]Project Closed.
+D2_L7=[17755]Project Opened.
+D2_L8=[17889]Started Editing.
+D2_L9=[18288]Stopped Editing.
+D2_L10=[18385]Started Editing.
+D2_L11=[18691]Stopped Editing.
+D2_L12=[21847]Started Editing.
+D2_L13=[22527]Stopped Editing.
 
 [Opened Files]
 1=main.c
@@ -43,7 +60,7 @@ forcecoff=0
 Type=4
 
 [defines]
-buildcount=8
+buildcount=14
 [Units]
 Count=1
 1=main (main)

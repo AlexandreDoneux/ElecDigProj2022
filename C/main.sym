@@ -24,29 +24,52 @@
 016     @INTERRUPT_AREA
 017     @INTERRUPT_AREA
 018     @INTERRUPT_AREA
-019     MAIN.ech_aff
-01A-01B MAIN.duration
-01C-01D MAIN.val_mesuree
-01E     MAIN.val_max
-01F     MAIN.val_min
-020-021 @DIV1616.P1
-020     afficheurs.true_val
-020     test_diodes.val_max
-020     MAIN.@SCRATCH1
-021     @delay_us1.P1
-021     afficheurs.ech_aff
-021     test_diodes.val_min
-022     afficheurs.val_point
-022     test_diodes.true_val
-022-023 @DIV1616.P1
-023     test_diodes.ech_aff
-023     afficheurs.val_affich
-024     @delay_ms1.P1
-024     afficheurs.@SCRATCH1
-024     @DIV1616.@SCRATCH1
-025     @DIV88.P1
-026     @DIV88.P1
-027     @DIV88.@SCRATCH1
+019-01A strtok.save
+01B     rs232_errors
+01C-01D debut_data
+01E-01F @STRING822
+020-027 data
+028     flag_suivant
+029     num_donner
+02A     MAIN.ech_aff
+02B-02C MAIN.duration
+02D-02E MAIN.val_mesuree
+02F-030 MAIN.val_max
+031     MAIN.num1
+032     MAIN.num2
+033     MAIN.num3
+034     test_diodes.val_max
+034-035 @DIV1616.P1
+034     afficheurs.true_val
+034     MAIN.@SCRATCH1
+035     afficheurs.ech_aff
+035     test_diodes.true_val
+036     afficheurs.val_point
+036     test_diodes.ech_aff
+036-037 @DIV1616.P1
+037     @PRINTF_D_9600_31766_31767.P1
+037     @PSTRINGCN_9600_31766_31767.P2
+037     afficheurs.val_affich
+038     @PRINTF_D_9600_31766_31767.P1
+038     @delay_ms1.P2
+038     @PSTRINGCN_9600_31766_31767.@SCRATCH1
+038     afficheurs.@SCRATCH1
+038     @DIV1616.@SCRATCH1
+039     @PSTRINGCN_9600_31766_31767.@SCRATCH2
+039     @PRINTF_D_9600_31766_31767.@SCRATCH1
+03A     @PRINTF_D_9600_31766_31767.@SCRATCH2
+03B     @PRINTF_D_9600_31766_31767.@SCRATCH3
+03C     @PRINTF_D_9600_31766_31767.@SCRATCH4
+03D     @DIV88.P1
+03E     @DIV88.P1
+03F     @DIV88.@SCRATCH1
+040-041 strcmp.s1
+040     RDA_isr.@SCRATCH1
+041     RDA_isr.@SCRATCH2
+042-043 strcmp.s2
+042     RDA_isr.@SCRATCH3
+043     RDA_isr.@SCRATCH4
+044     strcmp.@SCRATCH1
 F83     PSP_DATA
 FB4.6   C1OUT
 FB4.7   C2OUT
@@ -58,40 +81,49 @@ FBE     CCP_1_LOW
 FBF     CCP_1_HIGH
 FE1-FE2 @READ_PACKED_MEMORY.P1
 FE1-FE2 @WRITE_PACKED_MEMORY.P2
-FE9-FEA @READ_PACKED_MEMORY.P1
-FE9-FEA @WRITE_PROGRAM_MEMORY.P2
-FE9-FEA @WRITE_PACKED_MEMORY.P3
-FE9-FEA @READ_PROGRAM_MEMORY.P4
+FE9-FEA @READ_PROGRAM_MEMORY.P1
+FE9-FEA @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PROGRAM_MEMORY.P3
+FE9-FEA @WRITE_PACKED_MEMORY.P4
 FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
 FF6-FF8 @READ_PROGRAM_MEMORY.P2
 
 ROM Allocation:
 0000BA  RTCC_isr
-0000C0  RDA_isr
-0000C6  @delay_us1
-0000E2  @DIV1616
-000126  @DIV88
-00014E  @delay_ms1
-000176  afficheurs
-0001FE  test_diodes
-000218  MAIN
-000218  @cinit1
-00022A  @cinit2
+0000C0  @GETCH_BIU_1
+0000D8  strcmp
+00014E  RDA_isr
+0001AC  @const831.call
+0001B4  @const840.call
+0001BC  @DIV1616
+000200  @DIV88
+000228  @delay_ms1
+000250  afficheurs
+0002D8  @PSTRINGCN_9600_31766_31767
+0002F8  @PRINTF_D_9600_31766_31767
+0003AA  test_diodes
+0003FE  MAIN
+0003FE  @cinit1
+000422  @cinit2
 
 Project Directory:
-    C:\Users\Jarod\Documents\test2\
+    C:\Users\Jarod\Desktop\C\
 
 Project Files:
-    main.c                                                  [15-5-22 21:14  CRC=75D47FD9]
+    main.c                                                  [17-5-22 06:39  CRC=E5736C97]
     main.h                                                  [15-5-22 20:54  CRC=00000000]
     ..\..\..\..\Program Files (x86)\PICCDEMO\Devices\18F448.h [27-4-22 08:11  CRC=9BE10EDB]
+    ..\..\..\..\Program Files (x86)\PICCDEMO\Drivers\stdio.h [31-7-07 15:24  CRC=4E4534F4]
+    ..\..\..\..\Program Files (x86)\PICCDEMO\Drivers\string.h [06-4-20 08:43  CRC=B1605627]
+    ..\..\..\..\Program Files (x86)\PICCDEMO\Drivers\stddef.h [30-1-19 12:26  CRC=897CEC6C]
+    ..\..\..\..\Program Files (x86)\PICCDEMO\Drivers\ctype.h [03-1-08 15:55  CRC=2D1F019F]
 
-Source signature=AD969D8F
+Source signature=64B4F637
 Program memory checksum=0000
-Hex file CRC=63A9
+Hex file CRC=A09B
 
 Units:
-    C:\Users\Jarod\Documents\test2\main (main)
+    C:\Users\Jarod\Desktop\C\main (main)
 
 Compiler Settings:
     Processor:      PIC18F448

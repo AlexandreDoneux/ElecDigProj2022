@@ -1,0 +1,130 @@
+#include <main.h>
+
+#INT_RTCC
+void  RTCC_isr(void) 
+{
+
+}
+//communication avec port COM
+int flag_threshold = 0; //flag on si nouveau seuil
+char *buffer[4]; // 4 car cara di??but trame + seuil (max = 999) ==> ex: @954 ou @001 ou @051
+int buf_compteur = 0;
+char *trame_start = "@";
+
+#INT_RDA
+void  RDA_isr(void) 
+{
+   buffer[buf_compteur] = getc();   //lis le caracti??re i?? la position courante du flux de donni??es
+      trame_start = buffer[0];
+      if (flag_threshold == 0){   //si trame commence par @ et qu'on ne traite pas di??ji?? un nouveau seuil
+         buf_compteur ++;
+         if (buf_compteur >= 4){    //Traitement quand buffer plein
+            buf_compteur = 0;
+            flag_threshold = 1;
+         }
+      }
+}
+
+void test_diodes(int val_max, int val_min, int true_val, int ech_aff){
+   if((true_val > val_max) || (true_val < val_min)){
+      // Dans un cas d'erreur
+
+      //Dans le cas ou la valeur mesuree est entre les deux valeurs extremes
+      // led verte allumee
+      output_toggle(PIN_E1);
+   }
+   else{
+      output_high(PIN_E0);
+   }
+}
+
+int afficheurs(int true_val, int ech_aff){
+// Fonctiongerant les afficheurs 7 segments
+
+   
+   int val_point = 0b00000000; // valeur de base -# on affiche pas de point
+   int val_affich = 0b00010000; // valeur de base, sera d'office changee'
+   
+   //echange a chaque affichage -X alternance des afficheurs
+   if (ech_aff == 0){//aficheur 1 -> plus grand
+      ech_aff = 1;
+      val_affich = 0b00010000; //active le premier afficheur
+      
+      if (true_val >= 100){
+         val_point = 0b00100000; // binaire pour allumer le point 
+         true_val = true_val/100; //division entiere pour seulement avoir le premier chiffre
+         
+      }
+      else{
+         true_val = true_val/10;
+      }
+      
+   }
+   else{//afficheur 2 -# plus petit
+      ech_aff = 0;
+      val_affich = 0b01000000; //active le deuxieme afficheur
+      
+      if (true_val >= 100){
+         true_val = (true_val/10)%10; //on prends le deuxieme chiffre des trois
+      }
+      else{
+         true_val = true_val%10;
+      }
+   }
+   
+   delay_ms(150); //enlever IRL ?
+   output_b(true_val | val_affich | val_point);
+   //output_b(0b00011000);
+   // OU logique des differents nombres binaires. Pas sur que ca fonctionne, val_affich et val_point -> int
+   // alors que val -> tableau de int
+   return ech_aff;
+}
+
+void main()
+{
+   setup_timer_0(RTCC_INTERNAL);      //409 us overflow
+
+
+   enable_interrupts(INT_RTCC);
+   enable_interrupts(INT_RDA);
+   enable_interrupts(GLOBAL);
+   setup_low_volt_detect(FALSE);
+   int ech_aff = 0;
+   long duration;
+   int16 val_mesuree;
+   while(TRUE)
+   {
+
+      int val_max = 120;
+      int val_min = 60;
+      //Initialization + etre sure que trigger est off
+      
+      //Prise d'une mesure
+      output_high(PIN_C0);
+      delay_us(300);
+      output_low(PIN_C0);
+      
+      //Attend un output
+      while(!input(PIN_C1)){}
+      set_timer0(0);
+
+      
+      //Attend que l'output se termine
+      while(input(PIN_C1)){}
+      duration = (long)get_timer0();
+      val_mesuree = (int16)(duration / 145);
+      
+          //Affichage
+      if (val_mesuree >= 1000){ //Overflow ou distance negative = erreur
+         output_b(0);
+         output_high(PIN_D7); //affiche juste un point 
+
+      }
+      else{
+         ech_aff = afficheurs(val_mesuree, ech_aff);
+      }
+      test_diodes(val_max, val_min, val_mesuree, ech_aff);
+      //TODO: User Code
+   }
+
+}

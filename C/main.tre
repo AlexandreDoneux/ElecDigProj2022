@@ -1,8 +1,7 @@
 ÀÄmain
-   ÃÄMAIN  0/176  Ram=8
+   ÃÄMAIN  0/244  Ram=11
    ³  ÃÄ@cinit1  (Inline)  Ram=0
    ³  ÃÄ@cinit2  (Inline)  Ram=0
-   ³  ÃÄ@delay_us1  0/28  Ram=1
    ³  ÃÄ@DIV1616  0/68  Ram=5
    ³  ÃÄafficheurs  0/136  Ram=5
    ³  ³  ÃÄ@DIV88  0/40  Ram=3
@@ -11,6 +10,15 @@
    ³  ³  ÃÄ@DIV88  0/40  Ram=3
    ³  ³  ÃÄ@DIV88  0/40  Ram=3
    ³  ³  ÀÄ@delay_ms1  0/40  Ram=1
-   ³  ÀÄtest_diodes  0/26  Ram=4
+   ³  ÀÄtest_diodes  0/84  Ram=3
+   ³     ÃÄ@PSTRINGCN_9600_31766_31767  0/32  Ram=3
+   ³     ÃÄ@PRINTF_D_9600_31766_31767  0/178  Ram=6
+   ³     ³  ÃÄ@DIV88  0/40  Ram=3
+   ³     ³  ÀÄ@DIV88  0/40  Ram=3
+   ³     ÃÄ@PSTRINGCN_9600_31766_31767  0/32  Ram=3
+   ³     ÀÄ@PRINTF_D_9600_31766_31767  0/178  Ram=6
+   ³        ÀÄ*
    ÃÄRTCC_isr  0/6  Ram=0
-   ÀÄRDA_isr  0/6  Ram=0
+   ÀÄRDA_isr  0/94  Ram=4
+      ÃÄ@GETCH_BIU_1  0/24  Ram=0
+      ÀÄstrcmp  0/118  Ram=5
