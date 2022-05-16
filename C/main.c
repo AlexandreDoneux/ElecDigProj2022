@@ -28,9 +28,9 @@ void  RDA_isr(void) // reception et decoupe des donnees
 	}
 }
 
-void test_diodes(int val_max, int val_min, int true_val, int ech_aff){
-   if((true_val > val_max) || (true_val < val_min)){
-      // si valeur mesurée en dehors des limites
+void test_diodes(int val_max, int true_val, int ech_aff){
+   if(true_val < val_max){
+      // si valeur mesurée est en desous de la valeur max
       printf("OUT %d",true_val); // On envoie vers la connexion serial "ALARM_OUT distance"
       output_toggle(PIN_E1); // fait clignoter la led rouge
    }
@@ -91,9 +91,9 @@ void main()
    setup_low_volt_detect(FALSE);
    int ech_aff = 0;
    long duration;
-   int16 val_mesuree;
-   int val_max = 120;
-   int val_min = 0;
+   int16 val_mesuree; // sur 16 bits car peut dépasser 255
+   int16 val_max = 120; // idem
+   //int val_min = 0; // à implémenter dans le futur ?
    
    while(TRUE)
    {
@@ -101,9 +101,9 @@ void main()
       if(flag_suivant){ // tranforme les donnee en int et reconstruit le nombre 
 	      // code ASCII -> Les valeurs dans data sont des char. en soustrayant 48 on obtiens leur équivalent en int
 	      // int16 -> de base int se fait sur 8 bits. On peut y mettre comme valeur max 255.
-	 int16 num1 = data[1] - 48; 
-         int16 num2 = data[2] - 48;
-         int16 num3 = data[3] - 48;
+	 int num1 = data[1] - 48; 
+         int num2 = data[2] - 48;
+         int num3 = data[3] - 48;
          val_max = (int16)((num1*100)+(num2*10)+num3); // remise sous la bonne forme
          flag_suivant = 0;
       }
@@ -130,7 +130,7 @@ void main()
       else{
          ech_aff = afficheurs(val_mesuree, ech_aff);
       }
-      test_diodes(val_max, val_min, val_mesuree, ech_aff);
+      test_diodes(val_max, val_mesuree, ech_aff);
  
    }
 
