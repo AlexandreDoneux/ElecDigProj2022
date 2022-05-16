@@ -17,8 +17,7 @@ def lecture():
         libelleInfo.configure(text="En dehors de la limite", fg='red')
         distanceActuel = rep[1]
 
-
-connexion.flush()
+    connexion.flush()
 
 
 def clicked():
