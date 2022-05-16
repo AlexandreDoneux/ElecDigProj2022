@@ -21,7 +21,7 @@ def lecture():
 
 
 def clicked():
-    connexion.write(bytes(entrySet.get(), 'utf-8'))
+    connexion.write(bytes("#" + entrySet.get(), 'utf-8'))
 
 
 window = Tk()
