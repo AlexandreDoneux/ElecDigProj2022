@@ -31,11 +31,11 @@ void  RDA_isr(void) // reception et decoupe des donnees
 void test_diodes(int val_max, int val_min, int true_val, int ech_aff){
    if((true_val > val_max) || (true_val < val_min)){
       // si valeur mesurée en dehors des limites
-      printf("ALARM_OUT %d",true_val); // On envoie vers la connexion serial "ALARM_OUT distance"
+      printf("OUT %d",true_val); // On envoie vers la connexion serial "ALARM_OUT distance"
       output_toggle(PIN_E1); // fait clignoter la led rouge
    }
    else{
-      printf("ALARM_IN %d",true_val); // On envoie vers la connexion serial "ALARM_IN distance"
+      printf("IN %d",true_val); // On envoie vers la connexion serial "ALARM_IN distance"
       output_high(PIN_E0); // allume la led verte
    }
 }
