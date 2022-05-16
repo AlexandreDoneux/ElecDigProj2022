@@ -1,4 +1,3 @@
-from time import time
 from tkinter import *
 import serial
 
@@ -37,7 +36,7 @@ btnSet.grid(column=0, row=2)
 libelleDistance = Label(window, text='Distance actuelle: ' + str(distanceActuel) + ' cm')
 libelleDistance.grid(column=0, row=3)
 libelleInfo = Label(window, text='')
-window.mainloop()
+window.update()
 
 connexion.close()
 connexion.open()
@@ -45,5 +44,6 @@ try:
     while 1:
         if connexion.inWaiting() > 0:
             lecture()
+            window.update()
 except KeyboardInterrupt:
     connexion.close()
